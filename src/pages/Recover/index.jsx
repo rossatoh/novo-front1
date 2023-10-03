@@ -6,8 +6,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { ButtonText } from "../../components/ButtonText";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 export function Recover() {
   const [ email, setEmail ] = useState('');
+
+  const MySwal = withReactContent(Swal);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,16 +25,32 @@ export function Recover() {
         )
         .then((response) => {
           if (response.response) {
-            alert(response.response.data.message);
+            MySwal.fire({
+              icon: 'info',
+              title: 'Atenção!',
+              text: response.response.data.message,
+            })
           } else {
-            alert('E-mail enviado com sucesso');
+            MySwal.fire({
+              icon: 'info',
+              title: 'Atenção!',
+              text: 'E-mail enviado com sucesso',
+            })
           }
         })
         .catch(error => {
           if (error.response) {
-            alert(error.response.data.message);
+            MySwal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error.response.data.message,
+            })
           } else {
-            alert('Não foi possível enviar o e-mail');
+            MySwal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Não foi possível enviar o e-mail',
+            })
           }
         });
   }
@@ -40,6 +61,6 @@ export function Recover() {
       <Button onClick={handleSubmit} type='submit' title='Recuperar senha'/>
       <Link to='/signin'><ButtonText id="button-back" title="Voltar"/></Link>
     </Container>
-    
+
   )
 };

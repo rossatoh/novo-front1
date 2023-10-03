@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import { createContext, useContext, useState, useEffect } from 'react';
 
 import { api } from '../services/api';
@@ -6,6 +8,8 @@ export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
   const [data, setData] = useState({});
+
+  const MySwal = withReactContent(Swal)
 
   async function signIn({ email, password }) {
     try {
@@ -21,9 +25,17 @@ function AuthProvider({ children }) {
 
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message);
+        MySwal.fire({
+          didOpen: () => {
+            return MySwal.fire(<p>{ error.response.data.message }</p>)
+          },
+        })
       } else {
-        alert('Não foi possível entrar.');
+        return MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Não foi possível entrar.',
+        })
       }
     }
   }
@@ -49,12 +61,20 @@ function AuthProvider({ children }) {
       localStorage.setItem('@braindump:user', JSON.stringify(user));
 
       setData({ user, token: data.token });
-      alert('Perfil atualizado!');
+      MySwal.fire(<p>Perfil atualizado!</p>)
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message);
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       } else {
-        alert('Não foi possível atualizar o perfil.');
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Não foi possível atualizar o perfil.'
+        })
       }
     }
   }

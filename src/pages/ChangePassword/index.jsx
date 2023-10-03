@@ -5,10 +5,15 @@ import { useParams } from 'react-router-dom';
 import axios from "axios";
 import { useState } from 'react';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 export function ChangePassword() {
   const { token } = useParams();
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
+
+  const MySwal = withReactContent(Swal);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,16 +28,32 @@ export function ChangePassword() {
       )
         .then((response) => {
           if (response.response) {
-            alert(response.response.data.message);
+            MySwal.fire({
+              icon: 'success',
+              title: 'Sucesso!',
+              text: response.response.data.message,
+            })
           } else {
-            alert('Senha alterada com sucesso');
+            MySwal.fire({
+              icon: 'success',
+              title: 'Sucesso!',
+              text: 'Senha alterada!',
+            })
           }
         })
         .catch(error => {
           if (error.response) {
-            alert(error.response.data.message);
+            MySwal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: response.response.data.message,
+            })
           } else {
-            alert('Não foi possível alterar a senha');
+            MySwal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Não foi possível alterar a senha',
+            })
           }
         });
   }

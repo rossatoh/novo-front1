@@ -11,6 +11,9 @@ import { api } from '../../services/api';
 
 import { Container, Form } from './styles';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 export function New() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -19,6 +22,8 @@ export function New() {
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState([]);
   const navigate = useNavigate();
+
+  const MySwal = withReactContent(Swal);
 
   function handleBack() {
     navigate(-1)
@@ -44,15 +49,27 @@ export function New() {
 
   async function handleNewNote() {
     if (!title) {
-      return alert('Informe um título para a nota.')
+      return MySwal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'É necessário um título!',
+      })
     }
 
     if (newLink) {
-      return alert('Há links que não foram adicionados. Adicione ou remova para continuar...')
+      return MySwal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Existem links pendentes!',
+      })
     }
 
     if (newTag) {
-      return alert('Há tags que não foram adicionadas. Adicione ou remova para continuar...')
+      return MySwal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Existem tags pendentes!',
+      })
     }
 
     await api.post('/notes', {
@@ -62,7 +79,11 @@ export function New() {
       links
     });
 
-    alert('Nota criada com sucesso!');
+    MySwal.fire({
+      icon: 'success',
+      title: 'Sucesso',
+      text: 'Nota criada!',
+    })
     navigate(-1);
   }
 
