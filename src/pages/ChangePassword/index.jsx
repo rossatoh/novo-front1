@@ -19,7 +19,7 @@ export function ChangePassword() {
     e.preventDefault();
 
     await axios
-      .put('http://localhost:3333/recoveryPassword/changepassword',
+      .put('https://braindumpapi.onrender.com/recoveryPassword/changepassword',
         {
           password: password,
           confirmPassword: confirmPassword,

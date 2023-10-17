@@ -41,8 +41,8 @@ function AuthProvider({ children }) {
   }
 
   function signOut() {
-    const token = localStorage.removeItem('@braindump:token');
-    const user = localStorage.removeItem('@braindump:user');
+    localStorage.removeItem('@braindump:token');
+    localStorage.removeItem('@braindump:user');
 
     setData({});
   }

@@ -18,7 +18,7 @@ export function Recover() {
     e.preventDefault();
 
     await axios
-      .post('http://localhost:3333/recoveryPassword/sendemail',
+      .post('https://braindumpapi.onrender.com/recoveryPassword/sendemail',
         {
           email: email
         }
