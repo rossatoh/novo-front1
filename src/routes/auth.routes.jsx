@@ -6,7 +6,6 @@ import { WelcomePage } from '../pages/WelcomePage';
 import { Recover } from '../pages/Recover';
 import { ChangePassword } from '../pages/ChangePassword';
 
-
 export function AuthRoutes() {
   return (
     <Routes>
