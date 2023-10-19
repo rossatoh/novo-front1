@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "./main.jsx" (It may be another name but this file should listen to the server)",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/main.jsx (It may be another name but this file should listen to the server)"
+      }
+    ]
+  }
