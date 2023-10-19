@@ -1,12 +1,5 @@
 {
-  "routes": [
-    {
-      "src": "/routes/*/", // O padrão correspondente às URLs que começam com "/api/"
-      "dest": "/routes/index.js" // O arquivo ou destino que manipula essas solicitações
-    },
-    {
-      "src": "/blog/:slug", // Um padrão com parâmetros dinâmicos
-      "dest": "/blog/post.js" // O destino para esse padrão
-    }
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/"}
   ]
 }
